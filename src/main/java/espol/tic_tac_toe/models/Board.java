@@ -1,103 +1,100 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package espol.tic_tac_toe.models;
 
-/**
- *
- * @author USUARIO
- */
 public class Board {
     
-    private int[][] matrix = new int[3][3];
-    
-    private final char player1 = 'X';
-    private final char player2 = 'O';
-    private int utility_X;
-    private int utility_O;
+    private Mark[][] matrix;
+    private Player playerX;
+    private Player playerY;
 
-    public int[][] getMatrix() {
-        return matrix;
+    public Board() {
+        this.matrix = new Mark[3][3];
     }
 
-    public void setMatrix(int[][] matrix) {
+    public Board(Mark[][] matrix) {
         this.matrix = matrix;
     }
 
-    public char getPlayer1() {
-        return player1;
+    public Mark[][] getMatrix() {
+        return matrix;
     }
 
-    public char getPlayer2() {
-        return player2;
+    public Player getPlayerX() {
+        return playerX;
     }
-    public int getUtility_X() {
-        return utility_X;
+
+    public Player getPlayerY() {
+        return playerY;
     }
     
-    public int getUtility_O() {
-        return utility_O;
+    public int calculateUtility(Player player){
+        int rowsPlayerX = countRows(playerX);
+        int columsPlayerX = countColumns(playerX);
+        int diagonalPlayerX = countDiagonals(playerX);
+        
+        int rowsPlayerY = countRows(playerY);
+        int columsPlayerY = countColumns(playerY);
+        int diagonalPlayerY = countDiagonals(playerY);
+
+        int playerXPosibilities = rowsPlayerX + columsPlayerX + diagonalPlayerX;
+        int playerYPosibilities = rowsPlayerY + columsPlayerY + diagonalPlayerY;
+        
+        if(player == playerX){
+           return playerXPosibilities - playerYPosibilities;
+        }
+        return playerYPosibilities - playerXPosibilities ;
+    }
+   
+    private int countColumns(Player player){
+        int columns = 0;
+        int row = 0;
+        for(int j = 0; j < matrix.length; j++) {
+            if(matrix[row][j] != player.getMark() && matrix[row][j] != null){
+                columns--;
+            }else if(matrix[row+1][j] != player.getMark() && matrix[row+1][j] != null){
+                columns--;
+            }else if(matrix[row+2][j] != player.getMark() && matrix[row+2][j] != null){
+                columns--;
+            }
+            columns++;    
+            }
+        return columns;
     }
     
-    public int calculateUtilityX() {
-        int rowsPlayer1 = countLines(player1, true);
-        int columsPlayer1 = countLines(player1, false);
-        int diagonalPlayer1 = countDiagonals(player1);
-
-        int rowsPlayer2 = countLines(player2, true);
-        int columsPlayer2 = countLines(player2, false);
-        int diagonalPlayer2 = countDiagonals(player2);
-
-        int player1_Utility = rowsPlayer1 + columsPlayer1 + diagonalPlayer1;
-        int player2_Utility = rowsPlayer2 + columsPlayer2 + diagonalPlayer2;
-
-        return player1_Utility - player2_Utility;
-    }
-
-    private int countLines(char player, boolean rows) {
-        int count = 0;
-        for (int i = 0; i < 3; i++) {
-            boolean isPossible = true;
-            for (int j = 0; j < 3; j++) {
-                if (rows) {
-                    if (matrix[i][j] != player) {
-                        isPossible = false;
-                        break;
-                    }
-                } else {
-                    if (matrix[j][i] != player) {
-                        isPossible = false;
-                        break;
-                    }
-                }
+    private int countRows(Player player){
+        int rows = 0;
+        int column = 0;
+        for(int i = 0; i < matrix.length; i++) {
+            if(matrix[i][column] != player.getMark() && matrix[i][column] != null){
+                rows--;
+            }else if(matrix[i][column+1] != player.getMark() && matrix[i][column+1] != null){
+                rows--;
+            }else if(matrix[i][column+2] != player.getMark() && matrix[i][column+2] != null){
+                rows--;
             }
-            if (isPossible) {
-                count++;
+            rows++;    
             }
-        }
-        return count;
+        return rows;
     }
     
-    private int countDiagonals(char player) {
-        int count = 0;
-        boolean diagonal1 = true;
-        boolean diagonal2 = true;
-        for (int i = 0; i < 3; i++) {
-            if (matrix[i][i] != player) {
-                diagonal1 = false;
+    private int countDiagonals(Player player) {
+        int mainDiagonal = 0;
+        int secundaryDiagonal = 0;
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i][i] != player.getMark() && matrix[i][i] != null) {
+                mainDiagonal--;
             }
-            if (matrix[i][2 - i] != player) {
-                diagonal2 = false;
+            if (matrix[i][2 - i] != player.getMark() && matrix[i][i] != null) {
+                secundaryDiagonal--;
             }
         }
-        if (diagonal1) {
-            count++;
+        if (mainDiagonal == 3 && secundaryDiagonal == 3) {
+            return 2;
+        }else if (mainDiagonal == 3) {
+            return 1;
+        }else if(secundaryDiagonal == 3){
+            return 1;
         }
-        if (diagonal2) {
-            count++;
-        }
-        return count;
+        return 0;
     }
     
 }
