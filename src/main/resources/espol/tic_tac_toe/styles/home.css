@@ -20,7 +20,7 @@
     -fx-opacity: 0.5;
 }
 
-#XOBtnContainer {
+.XOBtnContainer {
     -fx-background-radius: 16px;
     -fx-background-color: #1a2a33;
     
@@ -32,6 +32,13 @@
     -fx-pref-width: 200px;
     -fx-pref-height: 42px;
     
+}
+
+.startSelectionBtn {
+    -fx-background-radius: 16px;
+    -fx-background-color: #1a2a33;
+    -fx-pref-width: 120px;
+    -fx-pref-height: 32px;
 }
 
 .menuBtn {
