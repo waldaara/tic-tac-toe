@@ -32,17 +32,18 @@ public class PredictionService {
             List<Tree<Board>> boardsPosibilities = child.getRootNode().getChildren();
             List<Integer> utilitySecondBoards = new LinkedList<>();
             for(Tree leaf : boardsPosibilities){
-                int utility = getUtilityNode(leaf);
+                int utility = calculateUtilityTreeNode(leaf);
                 utilitySecondBoards.add(utility);
             }
             int min = Collections.min(utilitySecondBoards);
             minUtilitySecondBoards.add(min);
             
-            int utilityFirstBoard = getUtilityNode(child);
+            int utilityFirstBoard = calculateUtilityTreeNode(child);
             utilityFirstBoards.add(utilityFirstBoard);
         }
-        int MaxUtil = findMaxUtility(minUtilitySecondBoards, utilityFirstBoards);
-        return searchBoardByUtility(predictionTree, MaxUtil);
+        int minUtilSecondBoard = Collections.min(minUtilitySecondBoards);
+        int MaxUtilFirstBoard = findMaxUtility(minUtilitySecondBoards, utilityFirstBoards);
+        return searchBestBoard(predictionTree, MaxUtilFirstBoard,minUtilSecondBoard);
     }
 
     private static List<Tree<Board>> generateChildrensTree(Node<Board> rootNode) {
@@ -81,8 +82,8 @@ public class PredictionService {
         return possiblesStates;
     }
     
-    private static int getUtilityNode(Tree<Board> node){
-        Node<Board> Node = node.getRootNode();
+    private static int calculateUtilityTreeNode(Tree<Board> tree){
+        Node<Board> Node = tree.getRootNode();
         Board board = Node.getContent();
                 
         Player player = board.getCurrentTurn();
@@ -96,8 +97,20 @@ public class PredictionService {
         return maxUtilityBoards.get(pos);
     }
     
-    //Still in work to tired to finish
-    private static Board searchBoardByUtility(Tree<Board> predictionTree, int utility){
+    private static Board searchBestBoard(Tree<Board> predictionTree, int maxUtilityFirstBoard, int minUtilitySecondBoard){
+        List<Tree<Board>> children = predictionTree.getRootNode().getChildren();
+        for(Tree childTree : children){
+            List<Tree<Board>> leafs = childTree.getRootNode().getChildren();
+            for(Tree leaf: leafs){
+                boolean firstCondition = calculateUtilityTreeNode(leaf) == minUtilitySecondBoard;
+                boolean secondCondition = calculateUtilityTreeNode(childTree) == maxUtilityFirstBoard;
+                if(firstCondition && secondCondition){
+                    Node<Board> nodeBoard = childTree.getRootNode();
+                    Board board = nodeBoard.getContent();
+                    return board;
+                }
+            }
+        }
         return null;
     }
     
