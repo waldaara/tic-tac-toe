@@ -1,5 +1,6 @@
 package espol.tic_tac_toe.models;
 
+import espol.tic_tac_toe.enums.Mark;
 import java.io.Serializable;
 
 public abstract class Player implements Serializable {

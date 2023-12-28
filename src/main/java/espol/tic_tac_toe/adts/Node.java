@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Node<E> {
-    
+
     private E content;
     private List<Tree<E>> children;
 
@@ -24,7 +24,7 @@ public class Node<E> {
     public List<Tree<E>> getChildren() {
         return children;
     }
-    
+
     public boolean addChild(Tree<E> child) {
         return children.add(child);
     }
@@ -32,4 +32,11 @@ public class Node<E> {
     public boolean removeChild(Tree<E> child) {
         return children.remove(child);
     }
+
+    public void addAll(List<Tree<E>> nodes) {
+        for (Tree<E> node : nodes) {
+            children.add(node);
+        }
+    }
+
 }
