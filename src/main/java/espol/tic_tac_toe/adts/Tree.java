@@ -9,6 +9,10 @@ public class Tree<E> {
     public Tree () {
         this.root = null; 
     }
+
+    public Tree(Node<E> root) {
+        this.root = root;
+    }
     
     public boolean isEmpty () {
         return this.root == null;
@@ -18,7 +22,7 @@ public class Tree<E> {
         return root.getContent();
     }
     
-    private Node getRootNode () {
+    public Node getRootNode () {
         return this.root;
     }
 
@@ -46,5 +50,5 @@ public class Tree<E> {
         }
         return true;
     }
-
+    
 }

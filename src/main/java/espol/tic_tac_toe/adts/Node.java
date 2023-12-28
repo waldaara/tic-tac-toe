@@ -32,4 +32,11 @@ public class Node<E> {
     public boolean removeChild(Tree<E> child) {
         return children.remove(child);
     }
+
+    public void addAll(List<Tree<E>> nodes) {
+        for (Tree<E> node : nodes) {
+            children.add(node);
+        }
+    }
+    
 }
