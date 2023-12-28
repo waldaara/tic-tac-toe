@@ -1,8 +1,9 @@
 package espol.tic_tac_toe.models;
 
 import espol.tic_tac_toe.enums.Mark;
+import java.io.Serializable;
 
-public class Board {
+public class Board implements Serializable{
 
     private Mark[][] matrix;
 

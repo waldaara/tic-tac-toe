@@ -9,8 +9,8 @@ public class Node<E> {
     private List<Tree<E>> children;
 
     public Node(E content) {
-        this.content = content;
-        this.children = new LinkedList<>();
+        content = content;
+        children = new LinkedList<>();
     }
 
     public E getContent() {
@@ -18,25 +18,19 @@ public class Node<E> {
     }
 
     public void setContent(E content) {
-        this.content = content;
+        content = content;
     }
 
     public List<Tree<E>> getChildren() {
         return children;
     }
 
-    public boolean addChild(Tree<E> child) {
-        return children.add(child);
+    public void addChild(Tree<E> child) {
+        children.add(child);
     }
 
-    public boolean removeChild(Tree<E> child) {
-        return children.remove(child);
-    }
-
-    public void addAll(List<Tree<E>> nodes) {
-        for (Tree<E> node : nodes) {
-            children.add(node);
-        }
+    public void addChildren(List<Tree<E>> children) {
+        children.addAll(children);
     }
 
 }
