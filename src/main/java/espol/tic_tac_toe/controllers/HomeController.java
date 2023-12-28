@@ -1,5 +1,7 @@
 package espol.tic_tac_toe.controllers;
 
+import espol.tic_tac_toe.App;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -21,31 +23,55 @@ import javafx.scene.shape.SVGPath;
 public class HomeController implements Initializable {
 
     @FXML
-    private HBox XOBtnContainer;
-
-    @FXML
-    private Button fullCPUBtn;
-
-    @FXML
-    private Button loadGameBtn;
+    private VBox root;
 
     @FXML
     private HBox logo;
 
     @FXML
-    private ToggleGroup markSelector;
-
-    @FXML
-    private SVGPath oSVG;
+    private VBox selectorContainer;
 
     @FXML
     private Label pickLabel;
 
     @FXML
-    private VBox root;
+    private HBox XOBtnContainer;
 
     @FXML
-    private VBox selectorContainer;
+    private ToggleGroup markSelector;
+
+    @FXML
+    private ToggleButton xSelectionBtn;
+
+    @FXML
+    private ToggleButton oSelectionBtn;
+
+    @FXML
+    private SVGPath xSVG;
+
+    @FXML
+    private SVGPath oSVG;
+
+    @FXML
+    private HBox startBtnContainer;
+
+    @FXML
+    private Label whoStartsLabel;
+
+    @FXML
+    private ToggleGroup firstSelector;
+
+    @FXML
+    private ToggleButton xFirstBtn;
+
+    @FXML
+    private ToggleButton oFirstBtn;
+
+    @FXML
+    private SVGPath xFirstSVG;
+
+    @FXML
+    private SVGPath oFirstSVG;
 
     @FXML
     private Button versusCPUBtn;
@@ -54,16 +80,10 @@ public class HomeController implements Initializable {
     private Button versusP2Btn;
 
     @FXML
-    private Label whoStartsLabel;
+    private Button loadGameBtn;
 
     @FXML
-    private SVGPath xSVG;
-
-    @FXML
-    private ToggleButton xSelectionBtn;
-
-    @FXML
-    private ToggleButton oSelectionBtn;
+    private Button fullCPUBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -75,7 +95,7 @@ public class HomeController implements Initializable {
 
         if (event.getSource() == xSelectionBtn) {
             switchButtonAppearance("#a8bfc9", "#1a2a33");
-            
+
         } else if (event.getSource() == oSelectionBtn) {
             switchButtonAppearance("#1a2a33", "#a8bfc9");
         }
@@ -88,25 +108,45 @@ public class HomeController implements Initializable {
         oSelectionBtn.setStyle("-fx-background-color: " + color2);
         oSVG.setStyle("-fx-fill: " + color1);
     }
-
+    
     @FXML
-    void onLoadGame(ActionEvent event) {
+    void onFirstSelected(ActionEvent event){
+        
+        if (event.getSource() == xFirstBtn) {
+            switchButtonAppearance2("#a8bfc9", "#1a2a33");
 
+        } else if (event.getSource() == oFirstBtn) {
+            switchButtonAppearance2("#1a2a33", "#a8bfc9");
+        }
+    }
+    
+    private void switchButtonAppearance2(String color1, String color2) {
+        xFirstBtn.setStyle("-fx-background-color: " + color1);
+        xFirstSVG.setStyle("-fx-fill: " + color2);
+        oFirstBtn.setStyle("-fx-background-color: " + color2);
+        oFirstSVG.setStyle("-fx-fill: " + color1);
     }
 
     @FXML
-    void onNewGameCPU1vsCPU2(ActionEvent event) {
-
+    void onNewGameVersusCPU(ActionEvent event) throws IOException {
+        App.setRoot("game");
+    }
+    
+    @FXML
+    void onNewGameVersusP2(ActionEvent event) throws IOException {
+        App.setRoot("game");
+        
+    }
+    
+    @FXML
+    void onLoadGame(ActionEvent event) throws IOException {
+        App.setRoot("loadGame");
     }
 
     @FXML
-    void onNewGameVersusCPU(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onNewGameVersusP2(ActionEvent event) {
-
+    void onNewGameCPU1vsCPU2(ActionEvent event) throws IOException {
+        App.setRoot("game");
+        
     }
 
 }
