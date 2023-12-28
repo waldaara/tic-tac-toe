@@ -14,12 +14,17 @@ import javafx.fxml.Initializable;
 
 public class GameController implements Initializable {
 
-    private Match match;
+    private static Match match;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         // aquí debsería instanciarce el match
+        
+    }
+    
+    public static void initData(Player playerX, Player playerO, Player currentTurn){
+        match = new Match(playerX, playerO, currentTurn);
     }
 
     public void onRestart() {

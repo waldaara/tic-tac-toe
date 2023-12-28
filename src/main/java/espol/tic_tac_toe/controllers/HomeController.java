@@ -27,21 +27,6 @@ import javafx.scene.shape.SVGPath;
 public class HomeController implements Initializable {
 
     @FXML
-    private VBox root;
-
-    @FXML
-    private HBox logo;
-
-    @FXML
-    private VBox selectorContainer;
-
-    @FXML
-    private Label pickLabel;
-
-    @FXML
-    private HBox XOBtnContainer;
-
-    @FXML
     private ToggleGroup markSelector;
 
     @FXML
@@ -55,12 +40,6 @@ public class HomeController implements Initializable {
 
     @FXML
     private SVGPath oSVG;
-
-    @FXML
-    private HBox startBtnContainer;
-
-    @FXML
-    private Label whoStartsLabel;
 
     @FXML
     private ToggleGroup firstSelector;
@@ -77,20 +56,8 @@ public class HomeController implements Initializable {
     @FXML
     private SVGPath oFirstSVG;
 
-    @FXML
-    private Button versusCPUBtn;
-
-    @FXML
-    private Button versusP2Btn;
-
-    @FXML
-    private Button loadGameBtn;
-
-    @FXML
-    private Button fullCPUBtn;
-    
     private Mark player1Mark;
-    
+
     private Mark firstTurnMark;
 
     @Override
@@ -145,7 +112,19 @@ public class HomeController implements Initializable {
         if (markSelector.getSelectedToggle() != null
                 && firstSelector.getSelectedToggle() != null) {
             App.setRoot("game");
+
+            Player playerX;
+            Player playerO;
+
+            if (player1Mark == Mark.X) {
+                playerX = new Human(Mark.X);
+                playerO = new CPU(Mark.O);
+            } else {
+                playerO = new Human(Mark.O);
+                playerX = new CPU(Mark.X);
+            }
             
+            startGame(playerX, playerO);
         }
     }
 
@@ -155,6 +134,11 @@ public class HomeController implements Initializable {
         if (markSelector.getSelectedToggle() != null
                 && firstSelector.getSelectedToggle() != null) {
             App.setRoot("game");
+
+            Player playerX = new Human(Mark.X);
+            Player playerO = new Human(Mark.O);
+
+            startGame(playerX, playerO);
         }
 
     }
@@ -170,7 +154,16 @@ public class HomeController implements Initializable {
         if (markSelector.getSelectedToggle() != null
                 && firstSelector.getSelectedToggle() != null) {
             App.setRoot("game");
+            
+            Player playerX = new CPU(Mark.X);
+            Player playerO = new CPU(Mark.O);
+            
+            startGame(playerX, playerO);
         }
+    }
+
+    private void startGame(Player playerX, Player playerO) {
+        GameController.initData(playerX, playerO, firstTurnMark == Mark.X ? playerX : playerO);
     }
 
 }
