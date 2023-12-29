@@ -16,8 +16,8 @@ public class PredictionsService {
 
         List<Tree<Board>> firstTurnPossibleStates = generatePossibleStates(predictionsTree.getRoot(), curentTurn);
 
-        System.out.println("firstTurnPossibleStates:" + firstTurnPossibleStates);
-        System.out.println("");
+//        System.out.println("firstTurnPossibleStates:" + firstTurnPossibleStates);
+//        System.out.println("");
 
         predictionsTree.addChildren(firstTurnPossibleStates);
 
@@ -26,8 +26,8 @@ public class PredictionsService {
         for (Tree<Board> firstTurnPossibleState : predictionsTree.getChildren()) {
             List<Tree<Board>> secondTurnPossibleStates = generatePossibleStates(firstTurnPossibleState.getRoot(), oponent);
 
-            System.out.println("secondTurnPossibleStates:" + secondTurnPossibleStates);
-            System.out.println("");
+//            System.out.println("secondTurnPossibleStates:" + secondTurnPossibleStates);
+//            System.out.println("");
 
             firstTurnPossibleState.addChildren(secondTurnPossibleStates);
         }
@@ -60,8 +60,8 @@ public class PredictionsService {
     }
 
     public static Board getBestMovement(Tree<Board> predictionsTree, Player player, Player oponent) {
-        if (predictionsTree.isEmpty() || predictionsTree.isLeaf()) {
-            return null;
+        if (predictionsTree.getChildren().size() == 1) {
+            return predictionsTree.getChildren().get(0).getRoot();
         }
 
         List<Integer> minUtilitySecondLevel = new LinkedList<>();
@@ -73,7 +73,7 @@ public class PredictionsService {
                 Integer secondLevelBoardUtility = UtilityCalculator.calculate(secondLevelBoard.getRoot(), player, oponent);
                 secondLevelUtilitiesPerFirstLevelBoard.add(secondLevelBoardUtility);
             }
-            
+
             Integer minUtilityPerFirstLevelBoard = Collections.min(secondLevelUtilitiesPerFirstLevelBoard);
             minUtilitySecondLevel.add(minUtilityPerFirstLevelBoard);
         }
