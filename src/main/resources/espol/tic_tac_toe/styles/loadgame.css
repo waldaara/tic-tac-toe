@@ -22,6 +22,11 @@
     -fx-background-radius: 16px;
     -fx-background-color: #1f3641;
     -fx-effect: innershadow(three-pass-box, rgb(15, 25, 30), 0, 0, 0, -10);
+    -fx-pref-width: 502px;
+    -fx-pref-height: 124px;
+    -fx-min-width: 502px;
+    -fx-min-height: 124px;
+    -fx-padding: 15 15 25 15;
 }
 
 .resumeBtn {
@@ -35,6 +40,11 @@
 .info{
     -fx-background-radius: 16px;
     -fx-background-color: #1a2a33;
+    -fx-pref-width: 472px;
+    -fx-pref-height: 80px;
+    -fx-min-width: 472px;
+    -fx-min-height: 80px;
+    -fx-padding: 0 15 0 15;
 }
 
 .text {
