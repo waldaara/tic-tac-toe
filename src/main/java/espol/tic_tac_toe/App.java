@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class App extends Application {
 
-    public static String path = "/src/main/resources/espol/tic_tac_toe/";
+    public static String path = "src/main/resources/espol/tic_tac_toe/";
     private static Scene scene;
 
     @Override
