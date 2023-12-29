@@ -2,12 +2,15 @@ package espol.tic_tac_toe.controllers;
 
 import espol.tic_tac_toe.App;
 import espol.tic_tac_toe.enums.Mark;
+import espol.tic_tac_toe.models.Board;
 import espol.tic_tac_toe.models.CPU;
 import espol.tic_tac_toe.models.Human;
+import espol.tic_tac_toe.models.Match;
 import espol.tic_tac_toe.models.Player;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,11 +18,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.shape.SVGPath;
 
-/**
- * FXML Controller class
- *
- * @author argen
- */
 public class HomeController implements Initializable {
 
     @FXML
@@ -106,20 +104,22 @@ public class HomeController implements Initializable {
     void onNewGameVersusCPU(ActionEvent event) throws IOException {
         if (markSelector.getSelectedToggle() != null
                 && firstSelector.getSelectedToggle() != null) {
-            App.setRoot("game");
-
             Player playerX;
             Player playerO;
 
             if (player1Mark == Mark.X) {
+                Match.isPlayer1X = true;
                 playerX = new Human(Mark.X);
                 playerO = new CPU(Mark.O);
             } else {
+                Match.isPlayer1X = false;
                 playerO = new Human(Mark.O);
                 playerX = new CPU(Mark.X);
             }
 
             startGame(playerX, playerO);
+
+            App.setRoot("game");
         }
     }
 
@@ -127,12 +127,19 @@ public class HomeController implements Initializable {
     void onNewGameVersusP2(ActionEvent event) throws IOException {
         if (markSelector.getSelectedToggle() != null
                 && firstSelector.getSelectedToggle() != null) {
-            App.setRoot("game");
-
             Player playerX = new Human(Mark.X);
             Player playerO = new Human(Mark.O);
 
+            if (player1Mark == Mark.X) {
+                Match.isPlayer1X = true;
+            } else {
+                Match.isPlayer1X = false;
+            }
+
             startGame(playerX, playerO);
+
+            App.setRoot("game");
+
         }
     }
 
@@ -145,18 +152,31 @@ public class HomeController implements Initializable {
     void onNewGameCPU1vsCPU2(ActionEvent event) throws IOException {
         if (markSelector.getSelectedToggle() != null
                 && firstSelector.getSelectedToggle() != null) {
-            App.setRoot("game");
-
             Player playerX = new CPU(Mark.X);
             Player playerO = new CPU(Mark.O);
 
+            if (player1Mark == Mark.X) {
+                Match.isPlayer1X = true;
+            } else {
+                Match.isPlayer1X = false;
+            }
+
             startGame(playerX, playerO);
+
+            App.setRoot("game");
+
         }
     }
 
     private void startGame(Player playerX, Player playerO) {
-        GameController.initData(playerX, playerO, firstTurnMark == Mark.X ? playerX : playerO);
-
+        Match.id = UUID.randomUUID().toString();
+        Match.board = new Board();
+        Match.playerX = playerX;
+        Match.playerO = playerO;
+        Match.firstTurn = firstTurnMark == Mark.X ? playerX : playerO;
+        Match.currentTurn = Match.firstTurn;
+        Match.ties = 0;
+        Match.winsO = 0;
+        Match.winsX = 0;
     }
-
 }
