@@ -11,12 +11,8 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
 
 /**
@@ -108,7 +104,6 @@ public class HomeController implements Initializable {
 
     @FXML
     void onNewGameVersusCPU(ActionEvent event) throws IOException {
-
         if (markSelector.getSelectedToggle() != null
                 && firstSelector.getSelectedToggle() != null) {
             App.setRoot("game");
@@ -123,14 +118,13 @@ public class HomeController implements Initializable {
                 playerO = new Human(Mark.O);
                 playerX = new CPU(Mark.X);
             }
-            
+
             startGame(playerX, playerO);
         }
     }
 
     @FXML
     void onNewGameVersusP2(ActionEvent event) throws IOException {
-
         if (markSelector.getSelectedToggle() != null
                 && firstSelector.getSelectedToggle() != null) {
             App.setRoot("game");
@@ -140,7 +134,6 @@ public class HomeController implements Initializable {
 
             startGame(playerX, playerO);
         }
-
     }
 
     @FXML
@@ -150,20 +143,20 @@ public class HomeController implements Initializable {
 
     @FXML
     void onNewGameCPU1vsCPU2(ActionEvent event) throws IOException {
-
         if (markSelector.getSelectedToggle() != null
                 && firstSelector.getSelectedToggle() != null) {
             App.setRoot("game");
-            
+
             Player playerX = new CPU(Mark.X);
             Player playerO = new CPU(Mark.O);
-            
+
             startGame(playerX, playerO);
         }
     }
 
     private void startGame(Player playerX, Player playerO) {
         GameController.initData(playerX, playerO, firstTurnMark == Mark.X ? playerX : playerO);
+
     }
 
 }

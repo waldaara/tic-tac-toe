@@ -3,7 +3,7 @@ package espol.tic_tac_toe.models;
 import espol.tic_tac_toe.adts.Tree;
 import java.io.Serializable;
 import java.util.UUID;
-//import espol.tic_tac_toe.services.PredictionsService;
+import espol.tic_tac_toe.services.PredictionsService;
 
 public class Match implements Serializable {
 
@@ -11,22 +11,22 @@ public class Match implements Serializable {
     private int winsX;
     private int winsO;
     private int ties;
-    private Board matchState;
+    private Board matchsBoard;
     private Player playerX;
     private Player playerO;
     private Player currentTurn;
-    private Tree<Board> matchTree;
+    private Tree<Board> predictionsTree;
 
     public Match(Player playerX, Player playerO, Player currentTurn) {
         this.id = UUID.randomUUID().toString();
         this.winsX = 0;
         this.winsO = 0;
         this.ties = 0;
-        this.matchState = new Board();
+        this.matchsBoard = new Board();
         this.playerX = playerX;
         this.playerO = playerO;
         this.currentTurn = currentTurn;
-//        this.matchTree = PredictionsService.generatePredictonsTree(this.matchState);
+        this.predictionsTree = PredictionsService.generatePredictionsTree(matchsBoard, playerX, playerO, currentTurn);
     }
 
     public String getId() {
@@ -57,12 +57,12 @@ public class Match implements Serializable {
         this.ties = ties;
     }
 
-    public Board getMatchState() {
-        return matchState;
+    public Board getMatchsBoard() {
+        return matchsBoard;
     }
 
-    public void setMatchState(Board matchState) {
-        this.matchState = matchState;
+    public void setMatchsBoard(Board matchsBoard) {
+        this.matchsBoard = matchsBoard;
     }
 
     public Player getPlayerX() {
@@ -89,14 +89,12 @@ public class Match implements Serializable {
         this.currentTurn = currentTurn;
     }
 
-    public Tree<Board> getMatchTree() {
-        return matchTree;
+    public Tree<Board> getPredictionsTree() {
+        return predictionsTree;
     }
 
-    public void setMatchTree(Tree<Board> matchTree) {
-        this.matchTree = matchTree;
+    public void setPredictionsTree(Tree<Board> predictionsTree) {
+        this.predictionsTree = predictionsTree;
     }
-    
-    
 
 }

@@ -5,6 +5,7 @@ import espol.tic_tac_toe.enums.Mark;
 import espol.tic_tac_toe.models.Human;
 import espol.tic_tac_toe.models.Match;
 import espol.tic_tac_toe.models.Player;
+import espol.tic_tac_toe.services.PredictionsService;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -19,12 +20,13 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        // aquí debsería instanciarce el match
-        
     }
-    
-    public static void initData(Player playerX, Player playerO, Player currentTurn){
+
+    public static void initData(Player playerX, Player playerO, Player currentTurn) {
         match = new Match(playerX, playerO, currentTurn);
+        
+        System.out.println("getBestMovement()");
+        System.out.println(PredictionsService.getBestMovement(match.getPredictionsTree(), match.getPlayerO(), match.getPlayerX()));
     }
 
     public void onRestart() {
@@ -37,7 +39,7 @@ public class GameController implements Initializable {
 
     public void onSave() {
         Thread thread = new Thread(() -> {
-            try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(match.getId() + ".bin"))) {
+            try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(App.path + "files/" + match.getId() + ".bin"))) {
                 out.writeObject(match);
             } catch (Exception e) {
                 e.printStackTrace();

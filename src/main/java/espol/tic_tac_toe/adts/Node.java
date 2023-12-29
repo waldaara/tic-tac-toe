@@ -14,7 +14,7 @@ public class Node<E> {
     }
 
     public E getContent() {
-        return content;
+        return this.content;
     }
 
     public void setContent(E content) {
@@ -22,21 +22,14 @@ public class Node<E> {
     }
 
     public List<Tree<E>> getChildren() {
-        return children;
+        return this.children;
     }
 
-    public boolean addChild(Tree<E> child) {
-        return children.add(child);
+    public void addChild(Tree<E> child) {
+        this.children.add(child);
     }
 
-    public boolean removeChild(Tree<E> child) {
-        return children.remove(child);
+    public void addChildren(List<Tree<E>> children) {
+        this.children.addAll(children);
     }
-
-    public void addAll(List<Tree<E>> nodes) {
-        for (Tree<E> node : nodes) {
-            children.add(node);
-        }
-    }
-
 }
