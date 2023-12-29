@@ -9,28 +9,27 @@ public class Node<E> {
     private List<Tree<E>> children;
 
     public Node(E content) {
-        content = content;
-        children = new LinkedList<>();
+        this.content = content;
+        this.children = new LinkedList<>();
     }
 
     public E getContent() {
-        return content;
+        return this.content;
     }
 
     public void setContent(E content) {
-        content = content;
+        this.content = content;
     }
 
     public List<Tree<E>> getChildren() {
-        return children;
+        return this.children;
     }
 
     public void addChild(Tree<E> child) {
-        children.add(child);
+        this.children.add(child);
     }
 
     public void addChildren(List<Tree<E>> children) {
-        children.addAll(children);
+        this.children.addAll(children);
     }
-
 }

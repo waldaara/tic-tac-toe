@@ -7,47 +7,52 @@ public class Tree<E> {
     private Node<E> root;
 
     public Tree() {
-        root = null;
+        this.root = null;
     }
 
     public Tree(E rootContent) {
-        root = new Node(rootContent);
+        this.root = new Node(rootContent);
     }
 
     public E getRoot() {
-        return root.getContent();
+        return this.root.getContent();
     }
 
     public void setRoot(E content) {
-        root.setContent(content);
+        this.root.setContent(content);
     }
 
     public Node getRootNode() {
-        return root;
+        return this.root;
     }
 
     public List<Tree<E>> getChildren() {
-        return root.getChildren();
+        return this.root.getChildren();
     }
 
     public void addChild(Tree<E> child) {
-        root.addChild(child);
+        this.root.addChild(child);
     }
 
     public void addChild(E childContent) {
-        root.addChild(new Tree<E>(childContent));
+        this.root.addChild(new Tree<E>(childContent));
     }
 
     public void addChildren(List<Tree<E>> children) {
-        root.addChildren(children);
+        this.root.addChildren(children);
     }
 
     public boolean isEmpty() {
-        return root == null;
+        return this.root == null;
     }
 
     public boolean isLeaf() {
-        return root.getChildren().isEmpty();
+        return this.root.getChildren().isEmpty();
+    }
+
+    @Override
+    public String toString() {
+        return "Tree{" + "root=" + root.getContent() + '}';
     }
 
 }

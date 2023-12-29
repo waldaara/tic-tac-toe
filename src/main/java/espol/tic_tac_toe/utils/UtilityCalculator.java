@@ -76,31 +76,31 @@ public class UtilityCalculator {
 
         Mark[][] matrix = board.getMatrix();
 
-        Mark oponentsMark = (player.getMark() == Mark.X) ? Mark.O : Mark.X;
+        Mark opponentsMark = (player.getMark() == Mark.X) ? Mark.O : Mark.X;
 
-        boolean oponentHasMarkInMainDiagonal = false;
+        boolean opponentHasMarkInMainDiagonal = false;
 
         for (int i = 0; i < matrix.length; i++) {
-            if (matrix[i][i] == oponentsMark) {
-                oponentHasMarkInMainDiagonal = true;
+            if (matrix[i][i] == opponentsMark) {
+                opponentHasMarkInMainDiagonal = true;
                 break;
             }
         }
 
-        if (!oponentHasMarkInMainDiagonal) {
+        if (!opponentHasMarkInMainDiagonal) {
             diagonals++;
         }
 
-        boolean oponentHasMarkInSecundaryDiagonal = false;
+        boolean opponentHasMarkInSecundaryDiagonal = false;
 
-        for (int i = matrix.length; i > 0; i--) {
-            if (matrix[i][i] == oponentsMark) {
-                oponentHasMarkInSecundaryDiagonal = true;
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i][matrix.length - 1 - i] == opponentsMark) {
+                opponentHasMarkInSecundaryDiagonal = true;
                 break;
             }
         }
 
-        if (!oponentHasMarkInSecundaryDiagonal) {
+        if (!opponentHasMarkInSecundaryDiagonal) {
             diagonals++;
         }
 

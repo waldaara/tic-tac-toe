@@ -15,12 +15,20 @@ public class PredictionsService {
         Tree<Board> predictionsTree = new Tree<>(matchsBoard);
 
         List<Tree<Board>> firstTurnPossibleStates = generatePossibleStates(predictionsTree.getRoot(), curentTurn);
+
+        System.out.println("firstTurnPossibleStates:" + firstTurnPossibleStates);
+        System.out.println("");
+
         predictionsTree.addChildren(firstTurnPossibleStates);
 
         Player oponent = curentTurn.getMark() == Mark.X ? playerO : playerX;
 
         for (Tree<Board> firstTurnPossibleState : predictionsTree.getChildren()) {
             List<Tree<Board>> secondTurnPossibleStates = generatePossibleStates(firstTurnPossibleState.getRoot(), oponent);
+
+            System.out.println("secondTurnPossibleStates:" + secondTurnPossibleStates);
+            System.out.println("");
+
             firstTurnPossibleState.addChildren(secondTurnPossibleStates);
         }
 
@@ -35,7 +43,11 @@ public class PredictionsService {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix.length; j++) {
                 if (matrix[i][j] == null) {
-                    Mark[][] possibleStateMatrix = board.getMatrix().clone();
+                    Mark[][] possibleStateMatrix = new Mark[matrix.length][matrix[i].length];
+                    for (int row = 0; row < matrix.length; row++) {
+                        System.arraycopy(matrix[row], 0, possibleStateMatrix[row], 0, matrix[i].length);
+                    }
+
                     possibleStateMatrix[i][j] = currentTurn.getMark();
 
                     Board possibleStateBoard = new Board(possibleStateMatrix);
@@ -61,7 +73,7 @@ public class PredictionsService {
                 Integer secondLevelBoardUtility = UtilityCalculator.calculate(secondLevelBoard.getRoot(), player, oponent);
                 secondLevelUtilitiesPerFirstLevelBoard.add(secondLevelBoardUtility);
             }
-
+            
             Integer minUtilityPerFirstLevelBoard = Collections.min(secondLevelUtilitiesPerFirstLevelBoard);
             minUtilitySecondLevel.add(minUtilityPerFirstLevelBoard);
         }
