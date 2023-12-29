@@ -4,13 +4,8 @@ import espol.tic_tac_toe.App;
 import espol.tic_tac_toe.enums.Mark;
 import espol.tic_tac_toe.models.CPU;
 import espol.tic_tac_toe.models.Human;
-import espol.tic_tac_toe.models.Match;
 import espol.tic_tac_toe.models.Player;
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -143,33 +138,7 @@ public class HomeController implements Initializable {
 
     @FXML
     void onLoadGame(ActionEvent event) throws IOException {
-
         App.setRoot("loadGame");
-
-        File[] savedMatches = (new File(App.path + "files")).listFiles();
-        
-        Thread t = new Thread(() -> {
-            if (savedMatches != null) {
-                for (File file : savedMatches) {
-                    if (file.isFile() && file.getName().endsWith(".bin")) {
-                        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-                            Match savedMatch = (Match) ois.readObject();
-
-                            // TODO: mostrar vista con los datos del match y dar la lógica a cada botóon, para que se cree un game con los datos guardados
-                            System.out.println("Objeto deserializado desde " + file.getName());
-                            System.out.println(savedMatch.toString());
-                        } catch (IOException | ClassNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            } else {
-                // TODO: mostrar mensaje no existen juegos guardados.
-            }
-        });
-        t.start();;
-        t.setDaemon(true);
-
     }
 
     @FXML
@@ -189,5 +158,5 @@ public class HomeController implements Initializable {
         GameController.initData(playerX, playerO, firstTurnMark == Mark.X ? playerX : playerO);
 
     }
-
+    
 }

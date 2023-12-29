@@ -4,6 +4,7 @@ import espol.tic_tac_toe.adts.Tree;
 import java.io.Serializable;
 import java.util.UUID;
 import espol.tic_tac_toe.services.PredictionsService;
+import java.time.LocalDateTime;
 
 public class Match implements Serializable {
 
@@ -16,6 +17,7 @@ public class Match implements Serializable {
     private Player playerO;
     private Player currentTurn;
     private Tree<Board> predictionsTree;
+    private final LocalDateTime saveDateTime;
 
     public Match(Player playerX, Player playerO, Player currentTurn) {
         this.id = UUID.randomUUID().toString();
@@ -27,6 +29,7 @@ public class Match implements Serializable {
         this.playerO = playerO;
         this.currentTurn = currentTurn;
         this.predictionsTree = PredictionsService.generatePredictionsTree(matchsBoard, playerX, playerO, currentTurn);
+        this.saveDateTime = LocalDateTime.now();
     }
 
     public String getId() {
@@ -97,4 +100,8 @@ public class Match implements Serializable {
         this.predictionsTree = predictionsTree;
     }
 
+    public LocalDateTime getSaveDateTime() {
+        return saveDateTime;
+    }
+    
 }
