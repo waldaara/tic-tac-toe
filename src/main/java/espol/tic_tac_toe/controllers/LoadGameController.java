@@ -81,10 +81,10 @@ public class LoadGameController implements Initializable {
         textContainer.setAlignment(Pos.CENTER_LEFT);
         textContainer.setSpacing(6);
 
-        Label matchId = new Label(("Game :" + match.getId()).toUpperCase());
+        Label matchId = new Label(("Game :" + Match.id).toUpperCase());
         matchId.getStyleClass().add("text");
 
-        Label matchTime = new Label(match.getSaveDateTime().toString());
+        Label matchTime = new Label(Match.saveDateTime.toString());
         matchTime.getStyleClass().add("text");
 
         textContainer.getChildren().addAll(matchId, matchTime);
@@ -96,7 +96,7 @@ public class LoadGameController implements Initializable {
         Button playBtn = new Button();
         playBtn.getStyleClass().add("resumeBtn");
         playBtn.setGraphic(playIcon);
-        infoContainer.setAlignment(playBtn, Pos.CENTER_RIGHT);
+        BorderPane.setAlignment(playBtn, Pos.CENTER_RIGHT);
 
         //TODO: set resume game logic and rename game title (en funcion de los jugadores)
         infoContainer.setRight(playBtn);
