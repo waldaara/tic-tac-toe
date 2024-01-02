@@ -2,6 +2,7 @@ package espol.tic_tac_toe.controllers;
 
 import espol.tic_tac_toe.App;
 import espol.tic_tac_toe.models.Match;
+import espol.tic_tac_toe.utils.MatchWrapper;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,9 +37,6 @@ public class LoadGameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        Platform.runLater(()
-                -> scrollContainer.lookup(".scroll-bar").setStyle("-fx-opacity: 0;"));
-
         File[] savedMatches = (new File(App.path + "files")).listFiles();
 
         if (savedMatches != null) {
@@ -46,17 +44,26 @@ public class LoadGameController implements Initializable {
                 if (file.isFile() && file.getName().endsWith(".bin")) {
                     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
 
-                        Match match = (Match) ois.readObject();
+                        MatchWrapper match = (MatchWrapper) ois.readObject();
+
+                        //validate time when game saved
+                        if (match.getId().equals(Match.id)
+                                && !match.getSaveDateTime().equals(Match.saveDateTime)) {
+                            match.setSaveDateTime(Match.saveDateTime);
+                        }
+
                         showMatch(match);
+                        updateMatchFrom(match);
 
                     } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
             }
-        } else {
-            // TODO: mostrar mensaje: no existen matches guardados.
         }
+
+        Platform.runLater(()
+                -> scrollContainer.lookup(".scroll-bar").setStyle("-fx-opacity: 0;"));
 
     }
 
@@ -65,11 +72,11 @@ public class LoadGameController implements Initializable {
         App.setRoot("home");
     }
 
-    private void showMatch(Match match) {
+    private void showMatch(MatchWrapper match) {
         mainContainer.getChildren().add(createMatchView(match));
     }
 
-    private VBox createMatchView(Match match) {
+    private VBox createMatchView(MatchWrapper match) {
 
         VBox sessionContainer = new VBox();
         sessionContainer.getStyleClass().add("sessionContainer");
@@ -81,10 +88,10 @@ public class LoadGameController implements Initializable {
         textContainer.setAlignment(Pos.CENTER_LEFT);
         textContainer.setSpacing(6);
 
-        Label matchId = new Label(("Game :" + Match.id).toUpperCase());
+        Label matchId = new Label(("Game: " + match.getPlayers()).toUpperCase());
         matchId.getStyleClass().add("text");
 
-        Label matchTime = new Label(Match.saveDateTime.toString());
+        Label matchTime = new Label(match.getSaveDateTimeFormatted());
         matchTime.getStyleClass().add("text");
 
         textContainer.getChildren().addAll(matchId, matchTime);
@@ -96,15 +103,46 @@ public class LoadGameController implements Initializable {
         Button playBtn = new Button();
         playBtn.getStyleClass().add("resumeBtn");
         playBtn.setGraphic(playIcon);
+        playBtn.setOnMouseClicked(event -> loadGame());
+        
         BorderPane.setAlignment(playBtn, Pos.CENTER_RIGHT);
 
-        //TODO: set resume game logic and rename game title (en funcion de los jugadores)
         infoContainer.setRight(playBtn);
         infoContainer.setLeft(textContainer);
 
         sessionContainer.getChildren().add(infoContainer);
 
         return sessionContainer;
+    }
+
+    private void loadGame() {
+
+        try {
+            App.setRoot("game");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
+        // TODO: RECONSTRUIR ESCENA EN GAME CONTROLLER
+    }
+
+    ;
+    
+    private void updateMatchFrom(MatchWrapper savedMatch) {
+
+        Match.id = savedMatch.getId();
+        Match.winsX = savedMatch.getWinsX();
+        Match.winsO = savedMatch.getWinsO();
+        Match.ties = savedMatch.getTies();
+        Match.board = savedMatch.getBoard();
+        Match.playerX = savedMatch.getPlayerX();
+        Match.playerO = savedMatch.getPlayerO();
+        Match.currentTurn = savedMatch.getCurrentTurn();
+        Match.firstTurn = savedMatch.getFirstTurn();
+        Match.predictionsTree = savedMatch.getPredictionsTree();
+        Match.isPlayer1X = savedMatch.isPlayer1X();
+        Match.saveDateTime = savedMatch.getSaveDateTime();
+
     }
 
 }

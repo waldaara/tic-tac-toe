@@ -9,7 +9,6 @@ import espol.tic_tac_toe.models.Match;
 import espol.tic_tac_toe.models.Player;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.UUID;
 import javafx.fxml.Initializable;
@@ -171,7 +170,6 @@ public class HomeController implements Initializable {
         Match.ties = 0;
         Match.winsO = 0;
         Match.winsX = 0;
-        Match.saveDateTime = LocalDateTime.now();
     }
     
 }

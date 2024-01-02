@@ -10,11 +10,13 @@ import espol.tic_tac_toe.models.Human;
 import espol.tic_tac_toe.models.Match;
 import espol.tic_tac_toe.models.Player;
 import espol.tic_tac_toe.services.PredictionsService;
+import espol.tic_tac_toe.utils.MatchWrapper;
 import espol.tic_tac_toe.utils.TicTacToe;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import javafx.application.Platform;
@@ -359,8 +361,13 @@ public class GameController implements Initializable {
 
     public void onSave() {
         Thread thread = new Thread(() -> {
+            
+            Match.saveDateTime = LocalDateTime.now();
             try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(App.path + "files/" + Match.id + ".bin"))) {
-                out.writeObject(new Match());
+                out.writeObject(new MatchWrapper(Match.id, Match.winsX, Match.winsO,
+                Match.ties, Match.board, Match.playerX, Match.playerO, Match.currentTurn,
+                Match.firstTurn, Match.predictionsTree, Match.isPlayer1X,
+                Match.saveDateTime));
             } catch (Exception e) {
                 e.printStackTrace();
             }
