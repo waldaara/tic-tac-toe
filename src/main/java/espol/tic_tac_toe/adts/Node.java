@@ -1,9 +1,10 @@
 package espol.tic_tac_toe.adts;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Node<E> {
+public class Node<E> implements Serializable{
 
     private E content;
     private List<Tree<E>> children;

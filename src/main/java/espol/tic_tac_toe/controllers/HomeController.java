@@ -130,11 +130,7 @@ public class HomeController implements Initializable {
             Player playerX = new Human(Mark.X);
             Player playerO = new Human(Mark.O);
 
-            if (player1Mark == Mark.X) {
-                Match.isPlayer1X = true;
-            } else {
-                Match.isPlayer1X = false;
-            }
+            Match.isPlayer1X = player1Mark == Mark.X;
 
             startGame(playerX, playerO);
 
@@ -155,11 +151,7 @@ public class HomeController implements Initializable {
             Player playerX = new CPU(Mark.X);
             Player playerO = new CPU(Mark.O);
 
-            if (player1Mark == Mark.X) {
-                Match.isPlayer1X = true;
-            } else {
-                Match.isPlayer1X = false;
-            }
+            Match.isPlayer1X = player1Mark == Mark.X;
 
             startGame(playerX, playerO);
 
@@ -179,4 +171,5 @@ public class HomeController implements Initializable {
         Match.winsO = 0;
         Match.winsX = 0;
     }
+    
 }

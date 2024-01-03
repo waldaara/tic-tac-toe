@@ -1,8 +1,9 @@
 package espol.tic_tac_toe.adts;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Tree<E> {
+public class Tree<E> implements Serializable{
 
     private Node<E> root;
 
