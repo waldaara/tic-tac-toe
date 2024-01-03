@@ -53,7 +53,6 @@ public class LoadGameController implements Initializable {
                         }
 
                         showMatch(match);
-                        updateMatchFrom(match);
 
                     } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
@@ -103,8 +102,8 @@ public class LoadGameController implements Initializable {
         Button playBtn = new Button();
         playBtn.getStyleClass().add("resumeBtn");
         playBtn.setGraphic(playIcon);
-        playBtn.setOnMouseClicked(event -> loadGame());
-        
+        playBtn.setOnMouseClicked(event -> loadGame(match));
+
         BorderPane.setAlignment(playBtn, Pos.CENTER_RIGHT);
 
         infoContainer.setRight(playBtn);
@@ -115,15 +114,16 @@ public class LoadGameController implements Initializable {
         return sessionContainer;
     }
 
-    private void loadGame() {
+    private void loadGame(MatchWrapper match) {
+
+        updateMatchFrom(match);
+        GameController.setSaved(true);
 
         try {
             App.setRoot("game");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
-        // TODO: RECONSTRUIR ESCENA EN GAME CONTROLLER
     }
 
     ;
